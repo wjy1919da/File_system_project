@@ -4,7 +4,6 @@ const {customerSchema} = require('../models/customer');
 const mongoose = require('mongoose');
 const express = require('express');
 const Fawn = require('fawn');
-Fawn.init(mongoose);
 const router = express.Router();
 const Customer = mongoose.model('Customer',customerSchema);
 const Movie = mongoose.model('Movie',movieSchema);

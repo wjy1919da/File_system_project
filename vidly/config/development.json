@@ -1,3 +1,4 @@
 {
-    "jwtPrivateKey": "vidly_jwtPrivateKey"
+    "port": 3008,
+    "jwtPrivateKey": "your_jwt_private_key"
 }

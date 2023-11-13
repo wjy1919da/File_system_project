@@ -1,16 +1,19 @@
+
 const authObj = require('../middleware/auth');
 const {genreSchema, validate} = require('../models/genre');
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const admin = require('../middleware/admin');
-
+const asyncMiddleware = require('../middleware/async');
+require('winston-mongodb');
 //console.log("adminObj",admin);
 const Genre = mongoose.model('Genre',genreSchema);
-router.get('/', async (req, res) => {
+router.get('/', asyncMiddleware(async (req, res) => {
+  //throw new Error('Could not get the genres.');
   const genres = await Genre.find().sort('name');
   res.send(genres);
-});
+}));
 // console.log("auth: ",authObj);
 router.post('/',authObj ,async (req, res) => {
   const { error } = validate(req.body); 
