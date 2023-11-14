@@ -1,18 +1,14 @@
 const mongoose = require('mongoose');
 const Fawn = require('fawn');
+const config = require('config');
+const logger = require('../utils/logger');
 module.exports = async function(){
-    try{
-        mongoose.connect('mongodb://localhost/vidly', { useNewUrlParser: true, useUnifiedTopology: true })
-          .then(() => {
-            console.log('Connected to MongoDB...');
-            Fawn.init(mongoose);  // 确保在数据库连接成功后初始化 Fawn
-          })
-          .catch(err => console.error('Could not connect to MongoDB...', err));
-        
-          console.log('Connected to MongoDB...');
-    }catch(err){
-        console.error('Could not connect to MongoDB:', err);
-        process.exit(1);
-    }
+    const db = config.get('db');
+    mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log(`Connected to ${db}...`);
+        Fawn.init(mongoose);  // 确保在数据库连接成功后初始化 Fawn
+    })
+    .catch(err => logger.error('Could not connect to MongoDB...', err));
 }
 
